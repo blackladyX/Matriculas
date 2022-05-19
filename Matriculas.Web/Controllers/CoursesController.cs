@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Matriculas.Web.Data;
+using Matriculas.Web.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Matriculas.Web.Data;
-using Matriculas.Web.Models;
 
 
 namespace Matriculas.Web.Controllers
@@ -23,7 +21,7 @@ namespace Matriculas.Web.Controllers
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Courses.ToListAsync());
+            return View(await _context.Courses.ToListAsync());
         }
 
         // GET: Courses/Details/5
@@ -55,13 +53,32 @@ namespace Matriculas.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseId,CourseCode,CourseName,InicialDate,FinalDate,Description,CourseCost,DateInscripcion,Capacity,Intensity,ClassSchedule")] Course course)
+        public async Task<IActionResult> Create(Course course)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(course);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException) 
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("Duplicate")) 
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name."); 
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    } 
+                }
+
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
             }
             return View(course);
         }
@@ -87,7 +104,7 @@ namespace Matriculas.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseId,CourseCode,CourseName,InicialDate,FinalDate,Description,CourseCost,DateInscripcion,Capacity,Intensity,ClassSchedule")] Course course)
+        public async Task<IActionResult> Edit(int id, Course course)
         {
             if (id != course.CourseId)
             {
@@ -100,19 +117,20 @@ namespace Matriculas.Web.Controllers
                 {
                     _context.Update(course);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CourseExists(course.CourseId))
+                catch (DbUpdateException dbUpdateException) 
+                { 
+                    if (dbUpdateException.InnerException.Message.Contains("Duplicate"))
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    } 
+                    else 
+                    { ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    } 
                 }
-                return RedirectToAction(nameof(Index));
+                catch (Exception exception) { ModelState.AddModelError(string.Empty, exception.Message); 
+                }
             }
             return View(course);
         }
@@ -149,14 +167,14 @@ namespace Matriculas.Web.Controllers
             {
                 _context.Courses.Remove(course);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CourseExists(int id)
         {
-          return _context.Courses.Any(e => e.CourseId == id);
+            return _context.Courses.Any(e => e.CourseId == id);
         }
     }
 }

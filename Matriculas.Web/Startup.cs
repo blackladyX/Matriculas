@@ -1,5 +1,5 @@
 using Matriculas.Web.Data;
-using Matriculas.Web.Helpers;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,8 +30,7 @@ namespace Matriculas.Web
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddTransient<SeedDb>();
-            services.AddScoped<IBlobHelper, BlobHelper>();
-            services.AddScoped<IConverterHelper, ConverterHelper>();
+
             services.AddControllersWithViews();
         }
 
