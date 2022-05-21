@@ -2,7 +2,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Matriculas.Web.Data;namespace Matriculas.Web
+using Matriculas.Web.Data;
+namespace Matriculas.Web
 {
     public class Program
     {
