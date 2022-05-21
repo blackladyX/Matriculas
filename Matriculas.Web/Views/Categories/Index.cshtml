@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="~/lib/font-awesome/css/fontawesome.css" />
 <link rel="stylesheet" href="~/lib/Font-Awesome/css/regular.min.css">
 <link rel="stylesheet" href="~/lib/Font-Awesome/css/solid.min.css"> <br /> 
-<p> <a asp-action="Create" class="btn btn-primary"><i class="fas fa-plus" i> Add New</a> </p>
+<p> <a asp-action="Create">Create New</a> </p>
 <div class="row"> 
     <div class="col-md-12"> 
         <div class="panel panel-default"> 
@@ -30,8 +30,12 @@
                                             <img src="@item.ImageFullPath" style="width:100px;height:100px;max-width: 100%; height: auto;" />
 
 </td> <td> 
-    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning"><i class="fas fa-edit"></i></a> 
-<button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog"><i class="fas fa-trash"></i></button>
+
+    <a asp-action="Edit" asp-route-id="@item.Id" ><i class="fas fa-edit"></i></a> |
+<button data-id="@item.Id" data-toggle="modal" data-target="#deleteDialog"><i class="fa fa-trash"  style="color: #1a77db"></i></button>
+
+ 
+
 </td>
 </tr> 
 } 

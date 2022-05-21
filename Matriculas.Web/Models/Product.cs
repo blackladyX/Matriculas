@@ -18,7 +18,8 @@ namespace Matriculas.Web.Models
         [DisplayName("Product Images Number")] public int ProductImagesNumber => ProductImages == null ? 0 : ProductImages.Count;
         //TO DO: Pendiente cambiar los paths por los de Azure
         [Display(Name = "Image")]
-        public string ImageFullPath => ProductImages == null || ProductImages.Count == 0 ? $"https://localhost:44390/images/noimage.png" 
+        public string ImageFullPath => ProductImages == null || ProductImages.Count == 0 
+            ? $"https://localhost:44349/images/noimage.png" 
             : ProductImages.FirstOrDefault().ImageFullPath;
     }
     }
