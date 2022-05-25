@@ -5,22 +5,25 @@ using Matriculas.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Matriculas.Web.Data;
+
 namespace Matriculas.Web.Data
 {
     public class SeedDb
     {
         private readonly ApplicationDbContext _context;
         private readonly IUserHelper _userHelper;
-        public SeedDb(ApplicationDbContext context)
+        public SeedDb(ApplicationDbContext context, IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;
         }
         public async Task SeedAsync()
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckCoursesAsync();
             await CheckRolesAsync();
-            await CheckUserAsync("1010", "Daniela", "A", "danielahinestroza54212@correo.itm.edu.co", "3005506250", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckUserAsync("1", "Orlando", "A", "oralpez@hotmail.com", "3000000000", "Calle Luna Calle Sol", UserType.Admin);
         }
 
         private async Task CheckRolesAsync()
@@ -54,7 +57,7 @@ namespace Matriculas.Web.Data
                     UserType = userType
                 };
 
-                await _userHelper.AddUserAsync(user, "1234");
+                await _userHelper.AddUserAsync(user, "123456"); //password debe tener una longitud de 6 caracteres
                 await _userHelper.AddUserToRoleAsync(user, userType.ToString());
             }
 
@@ -91,8 +94,8 @@ namespace Matriculas.Web.Data
                     TeacherAddress = "Calle 31D # 89D - 30",
                     TeacherCellPhone = "3053224270",
                     ArtisticArea = "Programación",
-                    },
-                    },
+                    }
+                    }
                 });
                 await _context.SaveChangesAsync();
             }

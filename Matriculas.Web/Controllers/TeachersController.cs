@@ -6,10 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Matriculas.Web.Controllers
-{
+{ 
+
+[Authorize(Roles = "Admin")]
+
     public class TeachersController : Controller
     {
         private readonly ApplicationDbContext _context;

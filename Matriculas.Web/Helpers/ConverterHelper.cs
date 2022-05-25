@@ -1,5 +1,7 @@
-﻿using Matriculas.Web.Models;
+﻿using Matriculas.Web.Data;
+using Matriculas.Web.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace Matriculas.Web.Helpers
 {
@@ -24,6 +26,46 @@ namespace Matriculas.Web.Helpers
                 Name = category.Name
             };
         }
+        private readonly ApplicationDbContext _context;
+        private readonly ICombosHelper _combosHelper;
+        public ConverterHelper(ApplicationDbContext context, ICombosHelper combosHelper)
+        {
+            _context = context;
+            _combosHelper = combosHelper;
+        }
+
+        public async Task<Product> ToProductAsync(ProductViewModel model, bool isNew)
+        {
+            return new Product
+            {
+                Category = await _context.Categories.FindAsync(model.CategoryId),
+                Description = model.Description,
+                Id = isNew ? 0 : model.Id,
+                IsActive = model.IsActive,
+                IsStarred = model.IsStarred,
+                Name = model.Name,
+                Price = model.Price,
+                ProductImages = model.ProductImages
+            };
+        }
+
+        public ProductViewModel ToProductViewModel(Product product)
+        {
+            return new ProductViewModel
+            {
+                Categories = _combosHelper.GetComboCategories(),
+                Category = product.Category,
+                CategoryId = product.Category.Id,
+                Description = product.Description,
+                Id = product.Id,
+                IsActive = product.IsActive,
+                IsStarred = product.IsStarred,
+                Name = product.Name,
+                Price = product.Price,
+                ProductImages = product.ProductImages
+            };
+        }
+
     }
 
 }

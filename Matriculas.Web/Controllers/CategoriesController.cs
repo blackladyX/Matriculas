@@ -5,9 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Matriculas.Web.Controllers
-{
+{ 
+
+[Authorize(Roles = "Admin")]
+
+
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;

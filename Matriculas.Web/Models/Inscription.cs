@@ -18,5 +18,11 @@ namespace Matriculas.Web.Models
         public string StudentAddress { get; set; }
         public string StudentCellPhone { get; set; }
         public string CourseName { get; set; }
+       
+       /* public ICollection<Product> Products { get; set; }
+        /[DisplayName("Course Code")]
+          /*public int CourseCode => Courses == null ? 0 : Courses.Count;*/
+
+
     }
 }

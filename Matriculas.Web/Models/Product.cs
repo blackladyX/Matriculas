@@ -19,7 +19,7 @@ namespace Matriculas.Web.Models
         //TO DO: Pendiente cambiar los paths por los de Azure
         [Display(Name = "Image")]
         public string ImageFullPath => ProductImages == null || ProductImages.Count == 0 
-            ? $"https://localhost:44349/images/noimage.png" 
+            ? $"https://matriculasweb20220520201641.azurewebsites.net/images/noimage.png" 
             : ProductImages.FirstOrDefault().ImageFullPath;
     }
     }

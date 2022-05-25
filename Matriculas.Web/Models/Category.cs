@@ -11,7 +11,7 @@ namespace Matriculas.Web.Models
         //TODO: Pending to put the correct paths
         [Display(Name = "Image")]
         public string ImageFullPath => ImageId == Guid.Empty 
-            ? "$https://localhost:44349/images/noimage.png"// luego cambiamos esta url por la de //Azure
-         : $"https://tiendaonline.Web.blob.core.windows.net/categories/{ImageId}";  // blob en Azure
+            ? "$https://matriculasweb20220520201641.azurewebsites.net/images/noimage.png"// luego cambiamos esta url por la de //Azure
+         : $"https://matriculasdemo1.blob.core.windows.net/categories/{ImageId}";  // blob en Azure
     }
 }
