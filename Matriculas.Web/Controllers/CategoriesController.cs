@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Matriculas.Web.Controllers
-{ 
+{
 
-[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
 
 
     public class CategoriesController : Controller
@@ -19,14 +19,15 @@ namespace Matriculas.Web.Controllers
         private readonly IBlobHelper _blobHelper;
         private readonly IConverterHelper _converterHelper;
 
-       public CategoriesController(ApplicationDbContext context, IBlobHelper blobHelper, IConverterHelper converterHelper)
+        public CategoriesController(ApplicationDbContext context, IBlobHelper blobHelper, IConverterHelper converterHelper)
         {
             _context = context;
             _blobHelper = blobHelper;
             _converterHelper = converterHelper;
         }
 
-        public async Task<IActionResult> Index() {
+        public async Task<IActionResult> Index()
+        {
             return View(await _context.Categories.ToListAsync());
         }
         public IActionResult Create()
@@ -163,5 +164,7 @@ namespace Matriculas.Web.Controllers
     }
 
 }
+
+
 
 

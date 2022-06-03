@@ -182,7 +182,7 @@ namespace Matriculas.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-      
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
